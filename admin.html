@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind Explorer | 后台导出</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell shell--admin">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">◎</div>
+          <div>
+            <p class="brand-en">Mind Explorer</p>
+            <p class="brand-cn">数据管理后台</p>
+          </div>
+        </div>
+
+        <section class="sidebar-copy">
+          <p class="eyebrow">ADMIN EXPORT</p>
+          <h1 class="sidebar-title">结果导出页</h1>
+          <div class="divider"></div>
+          <p class="sidebar-text">
+            这个页面用于研究者管理员下载所有受试者作答结果。请配合 Supabase Edge Function 一起使用。
+          </p>
+        </section>
+
+        <section class="system-panel">
+          <div class="system-row">
+            <span>导出接口</span>
+            <strong id="admin-function-status">未配置</strong>
+          </div>
+          <div class="system-row">
+            <span>推荐格式</span>
+            <strong>CSV / JSON</strong>
+          </div>
+        </section>
+      </aside>
+
+      <main class="main-panel">
+        <div class="status-row">
+          <a class="status-link" href="./index.html">返回问卷页</a>
+        </div>
+
+        <section class="screen screen--active">
+          <p class="eyebrow">EXPORT ALL RESPONSES</p>
+          <h2 class="section-title">导出所有受试者结果</h2>
+          <div class="divider"></div>
+          <p class="section-copy">
+            请输入管理员导出令牌。页面会调用 Supabase Edge Function 返回 CSV 或 JSON 文件。
+          </p>
+
+          <form class="profile-form" id="admin-export-form">
+            <label class="field">
+              <span>管理员导出令牌</span>
+              <input id="admin-token" name="adminToken" type="password" required />
+            </label>
+            <label class="field">
+              <span>导出格式</span>
+              <select id="export-format" name="format">
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+              </select>
+            </label>
+
+            <div class="navigation navigation--stack-mobile">
+              <button class="ghost-button" id="preview-endpoint-button" type="button">查看接口配置</button>
+              <button class="primary-button primary-button--compact" type="submit">
+                开始导出
+                <span>↓</span>
+              </button>
+            </div>
+          </form>
+
+          <div class="submission-panel submission-panel--compact">
+            <div>
+              <h3>执行状态</h3>
+              <p id="admin-status-text">尚未发起导出。</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./supabase-config.js"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>
