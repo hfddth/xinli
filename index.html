@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind Explorer | 心理探索问卷</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">◎</div>
+          <div>
+            <p class="brand-en">Mind Explorer</p>
+            <p class="brand-cn">心理探索计划</p>
+          </div>
+        </div>
+
+        <section class="sidebar-copy">
+          <p class="eyebrow">RESEARCH EDITION</p>
+          <h1 class="sidebar-title">心理探索问卷</h1>
+          <div class="divider"></div>
+          <p class="sidebar-text">
+            这是面向正式收数场景的问卷版本，支持在线提交、自动计分、报告生成与后台导出。
+          </p>
+        </section>
+
+        <section class="progress-card" id="progress-card" hidden>
+          <p class="progress-label">问卷进度</p>
+          <div class="progress-ring" id="progress-ring">
+            <div class="progress-ring__inner">
+              <span class="progress-ring__value" id="progress-current">1</span>
+              <span class="progress-ring__total" id="progress-total">/ 73</span>
+            </div>
+          </div>
+          <p class="progress-hint">预计用时 15-20 分钟</p>
+        </section>
+
+        <section class="system-panel">
+          <div class="system-row">
+            <span>数据库状态</span>
+            <strong id="db-status-text">未连接</strong>
+          </div>
+          <div class="system-row">
+            <span>当前版本</span>
+            <strong>Supabase Research</strong>
+          </div>
+          <div class="system-row">
+            <span>题目数量</span>
+            <strong id="sidebar-total">73</strong>
+          </div>
+        </section>
+
+        <blockquote class="quote">
+          <span class="quote-mark">“</span>
+          <p>认识自己，是改变的开始，也是成长的第一步。</p>
+          <footer>— Carl Jung</footer>
+        </blockquote>
+
+        <div class="privacy-note">
+          <span class="privacy-icon">🔒</span>
+          <div>
+            <p>隐私保护中</p>
+            <small>数据将通过 Supabase 安全存储，可按研究流程进行导出与管理。</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <div class="status-row">
+          <div class="status-pill" id="connection-pill">离线演示模式</div>
+          <a class="status-link" href="./admin.html">后台导出页</a>
+        </div>
+
+        <section class="screen screen--active" id="welcome-screen">
+          <p class="eyebrow">WELCOME TO</p>
+          <h2 class="hero-title">Mind Explorer</h2>
+          <p class="hero-subtitle">心理探索计划</p>
+          <div class="divider"></div>
+
+          <div class="hero-body">
+            <p>当前版本适用于正式研究收数流程。</p>
+            <p>作答完成后将自动进行反向计分、总分计算，并生成个人报告页面。</p>
+            <p>如已接入 Supabase，问卷结果会同步写入数据库，便于后续统一导出。</p>
+          </div>
+
+          <div class="feature-list">
+            <article class="feature-item">
+              <span class="feature-icon">◎</span>
+              <div>
+                <h3>在线收数</h3>
+                <p>支持将完整答卷、计分结果与作答元信息提交到 Supabase。</p>
+              </div>
+            </article>
+            <article class="feature-item">
+              <span class="feature-icon">◌</span>
+              <div>
+                <h3>自动计分</h3>
+                <p>支持反向计分、维度得分、百分制转换与总分生成。</p>
+              </div>
+            </article>
+            <article class="feature-item">
+              <span class="feature-icon">◍</span>
+              <div>
+                <h3>结果导出</h3>
+                <p>支持个人报告下载，并预留后台总表导出接口。</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="info-banner" id="config-banner">
+            当前还没有填写 Supabase 配置，问卷仍可演示，但不会真正写入数据库。
+          </div>
+
+          <button class="primary-button" id="start-button" type="button">
+            开始填写
+            <span>→</span>
+          </button>
+        </section>
+
+        <section class="screen" id="profile-screen">
+          <p class="eyebrow">PARTICIPANT PROFILE</p>
+          <h2 class="section-title">作答信息确认</h2>
+          <div class="divider"></div>
+          <p class="section-copy">
+            为了后续研究整理，请在开始前填写基础信息。你也可以只保留系统生成的受试者编号。
+          </p>
+
+          <form class="profile-form" id="profile-form">
+            <label class="field">
+              <span>受试者编号</span>
+              <input id="respondent-code" name="respondentCode" type="text" required />
+            </label>
+            <label class="field">
+              <span>姓名或昵称（可选）</span>
+              <input id="participant-name" name="participantName" type="text" />
+            </label>
+            <label class="field">
+              <span>联系邮箱（可选）</span>
+              <input id="participant-email" name="participantEmail" type="email" />
+            </label>
+            <label class="field">
+              <span>备注信息（可选）</span>
+              <textarea id="participant-note" name="participantNote" rows="4"></textarea>
+            </label>
+
+            <label class="checkbox-row">
+              <input id="consent-checkbox" name="consent" type="checkbox" required />
+              <span>我已知晓本问卷仅用于研究用途，并同意按真实感受作答。</span>
+            </label>
+
+            <div class="navigation navigation--stack-mobile">
+              <button class="ghost-button" id="profile-back-button" type="button">← 返回介绍</button>
+              <button class="primary-button primary-button--compact" type="submit">
+                进入答题
+                <span>→</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="screen" id="question-screen">
+          <div class="question-header">
+            <div>
+              <p class="eyebrow" id="question-section-label">QUESTION 01</p>
+              <h2 class="question-title" id="question-text"></h2>
+              <div class="divider"></div>
+              <p class="question-hint">请选择最符合你情况的选项</p>
+            </div>
+            <div class="question-count">
+              <span id="question-count-current">01</span>
+              <small>/ <span id="question-count-total">73</span></small>
+            </div>
+          </div>
+
+          <div class="scale-grid" id="options-container"></div>
+
+          <div class="answer-meta">
+            <span class="dimension-tag" id="dimension-tag"></span>
+            <span class="dimension-subtag" id="dimension-subtag"></span>
+            <span class="dimension-subtag" id="reverse-tag"></span>
+          </div>
+
+          <div class="navigation">
+            <button class="ghost-button" id="prev-button" type="button">← 上一题</button>
+            <button class="primary-button primary-button--compact" id="next-button" type="button">
+              下一题
+              <span>→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="screen" id="report-screen">
+          <p class="eyebrow">SUMMARY REPORT</p>
+          <h2 class="section-title report-title">你的心理探索评估报告</h2>
+          <div class="divider"></div>
+
+          <div class="report-topline">
+            <div class="report-score-card">
+              <span class="score-card__value" id="report-total-score">0</span>
+              <span class="score-card__label">综合总分 / 100</span>
+            </div>
+            <div class="report-copy">
+              <p id="report-summary-text"></p>
+              <p id="report-submission-status" class="submission-status"></p>
+              <p id="report-response-code" class="report-meta"></p>
+            </div>
+          </div>
+
+          <div class="report-grid" id="dimension-report-list"></div>
+
+          <div class="report-panels">
+            <article class="report-panel">
+              <h3>优势与亮点</h3>
+              <ul id="strength-list"></ul>
+            </article>
+            <article class="report-panel">
+              <h3>提升建议</h3>
+              <ul id="suggestion-list"></ul>
+            </article>
+          </div>
+
+          <div class="submission-panel">
+            <div>
+              <h3>数据库写入状态</h3>
+              <p id="submission-detail-text">尚未提交。</p>
+            </div>
+            <div class="submission-actions">
+              <button class="ghost-button" id="retry-submit-button" type="button">重试提交</button>
+              <button class="ghost-button" id="download-report-button" type="button">下载个人报告</button>
+              <button class="primary-button primary-button--compact" id="restart-button" type="button">
+                重新作答
+                <span>↺</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./supabase-config.js"></script>
+    <script src="./data/questions.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
