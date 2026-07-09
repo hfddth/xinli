@@ -296,16 +296,6 @@ button {
     linear-gradient(180deg, rgba(250, 246, 239, 0.96), rgba(243, 235, 225, 0.98));
 }
 
-.status-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.status-pill,
-.status-link,
 .dimension-tag,
 .dimension-subtag {
   display: inline-flex;
@@ -318,10 +308,6 @@ button {
   box-shadow: 0 18px 26px rgba(28, 40, 65, 0.08);
   color: var(--text-dark);
   font-size: 1rem;
-}
-
-.status-link {
-  color: var(--accent);
 }
 
 .screen {

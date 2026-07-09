@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mind Explorer | 心理探索问卷</title>
+    <title>Mind Explorer | 心理探索测评</title>
+    <meta
+      name="description"
+      content="Mind Explorer 心理探索测评，提供结构化作答、自动计分与个人报告生成。"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,11 +28,11 @@
         </div>
 
         <section class="sidebar-copy">
-          <p class="eyebrow">RESEARCH EDITION</p>
-          <h1 class="sidebar-title">心理探索问卷</h1>
+          <p class="eyebrow">ASSESSMENT</p>
+          <h1 class="sidebar-title">心理探索测评</h1>
           <div class="divider"></div>
           <p class="sidebar-text">
-            这是面向正式收数场景的问卷版本，支持在线提交、自动计分、报告生成与后台导出。
+            通过结构化题目了解你的心理状态、行为倾向与自我调节资源，完成后自动生成个人测评报告。
           </p>
         </section>
 
@@ -45,16 +49,16 @@
 
         <section class="system-panel">
           <div class="system-row">
-            <span>数据库状态</span>
-            <strong id="db-status-text">未连接</strong>
-          </div>
-          <div class="system-row">
-            <span>当前版本</span>
-            <strong>Supabase Research</strong>
-          </div>
-          <div class="system-row">
-            <span>题目数量</span>
+            <span>测评题量</span>
             <strong id="sidebar-total">73</strong>
+          </div>
+          <div class="system-row">
+            <span>预计用时</span>
+            <strong>15-20 分钟</strong>
+          </div>
+          <div class="system-row">
+            <span>结果形式</span>
+            <strong>个人报告</strong>
           </div>
         </section>
 
@@ -68,17 +72,12 @@
           <span class="privacy-icon">🔒</span>
           <div>
             <p>隐私保护中</p>
-            <small>数据将通过 Supabase 安全存储，可按研究流程进行导出与管理。</small>
+            <small>请在安静环境中独立作答，报告仅用于自我理解与研究参考，不作为医学诊断依据。</small>
           </div>
         </div>
       </aside>
 
       <main class="main-panel">
-        <div class="status-row">
-          <div class="status-pill" id="connection-pill">离线演示模式</div>
-          <a class="status-link" href="./admin.html">后台导出页</a>
-        </div>
-
         <section class="screen screen--active" id="welcome-screen">
           <p class="eyebrow">WELCOME TO</p>
           <h2 class="hero-title">Mind Explorer</h2>
@@ -86,37 +85,37 @@
           <div class="divider"></div>
 
           <div class="hero-body">
-            <p>当前版本适用于正式研究收数流程。</p>
-            <p>作答完成后将自动进行反向计分、总分计算，并生成个人报告页面。</p>
-            <p>如已接入 Supabase，问卷结果会同步写入数据库，便于后续统一导出。</p>
+            <p>这是一份面向自我探索与研究参考的心理测评。</p>
+            <p>请根据近期真实感受作答，系统会自动完成计分并生成个人报告。</p>
+            <p>测评结果用于帮助你理解当前状态与发展资源，不作为医学诊断或治疗建议。</p>
           </div>
 
           <div class="feature-list">
             <article class="feature-item">
               <span class="feature-icon">◎</span>
               <div>
-                <h3>在线收数</h3>
-                <p>支持将完整答卷、计分结果与作答元信息提交到 Supabase。</p>
+                <h3>结构化测评</h3>
+                <p>围绕多个心理维度进行题目设计，帮助你更系统地观察自身状态。</p>
               </div>
             </article>
             <article class="feature-item">
               <span class="feature-icon">◌</span>
               <div>
                 <h3>自动计分</h3>
-                <p>支持反向计分、维度得分、百分制转换与总分生成。</p>
+                <p>作答完成后即时完成分数换算，并呈现清晰的综合结果。</p>
               </div>
             </article>
             <article class="feature-item">
               <span class="feature-icon">◍</span>
               <div>
-                <h3>结果导出</h3>
-                <p>支持个人报告下载，并预留后台总表导出接口。</p>
+                <h3>个人报告</h3>
+                <p>生成优势亮点与提升建议，便于后续自我回顾与整理。</p>
               </div>
             </article>
           </div>
 
           <div class="info-banner" id="config-banner">
-            当前还没有填写 Supabase 配置，问卷仍可演示，但不会真正写入数据库。
+            作答前请确认你处于相对安静的环境，并尽量按照第一感受选择。
           </div>
 
           <button class="primary-button" id="start-button" type="button">
@@ -130,7 +129,7 @@
           <h2 class="section-title">作答信息确认</h2>
           <div class="divider"></div>
           <p class="section-copy">
-            为了后续研究整理，请在开始前填写基础信息。你也可以只保留系统生成的受试者编号。
+            请确认作答编号。姓名、邮箱与备注均为可选信息，你也可以只保留系统生成的编号。
           </p>
 
           <form class="profile-form" id="profile-form">
@@ -153,7 +152,7 @@
 
             <label class="checkbox-row">
               <input id="consent-checkbox" name="consent" type="checkbox" required />
-              <span>我已知晓本问卷仅用于研究用途，并同意按真实感受作答。</span>
+              <span>我已了解本测评仅用于自我探索与研究参考，并同意按真实感受作答。</span>
             </label>
 
             <div class="navigation navigation--stack-mobile">
@@ -223,11 +222,11 @@
 
           <div class="submission-panel">
             <div>
-              <h3>数据库写入状态</h3>
+              <h3>报告保存状态</h3>
               <p id="submission-detail-text">尚未提交。</p>
             </div>
             <div class="submission-actions">
-              <button class="ghost-button" id="retry-submit-button" type="button">重试提交</button>
+              <button class="ghost-button" id="retry-submit-button" type="button">重新保存</button>
               <button class="ghost-button" id="download-report-button" type="button">下载个人报告</button>
               <button class="primary-button primary-button--compact" id="restart-button" type="button">
                 重新作答

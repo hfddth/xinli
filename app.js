@@ -83,8 +83,6 @@ const progressRing = document.querySelector("#progress-ring");
 const progressCurrent = document.querySelector("#progress-current");
 const progressTotal = document.querySelector("#progress-total");
 const sidebarTotal = document.querySelector("#sidebar-total");
-const dbStatusText = document.querySelector("#db-status-text");
-const connectionPill = document.querySelector("#connection-pill");
 const configBanner = document.querySelector("#config-banner");
 const startButton = document.querySelector("#start-button");
 const profileBackButton = document.querySelector("#profile-back-button");
@@ -383,7 +381,7 @@ function renderReport() {
     suggestionList.appendChild(li);
   });
 
-  retrySubmitButton.hidden = hasSupabaseConfig() && state.submission.status === "success";
+  retrySubmitButton.hidden = !hasSupabaseConfig() || state.submission.status !== "error";
 }
 
 async function submitResponse() {
@@ -393,13 +391,13 @@ async function submitResponse() {
 
   if (!hasSupabaseConfig()) {
     state.submission.status = "skipped";
-    state.submission.message = "当前未填写 Supabase 配置，报告已生成，但没有写入数据库。";
+    state.submission.message = "报告已生成，可下载保存。";
     state.submission.lastAttemptAt = new Date().toISOString();
     return;
   }
 
   state.submission.status = "submitting";
-  state.submission.message = "正在提交到 Supabase，请稍候...";
+  state.submission.message = "正在保存结果，请稍候...";
   renderReport();
 
   const payload = buildSubmissionPayload();
@@ -425,12 +423,12 @@ async function submitResponse() {
     state.submission.lastAttemptAt = new Date().toISOString();
     state.submission.responseId = result?.[0]?.id || "";
     state.submission.message = state.submission.responseId
-      ? `已成功写入数据库，记录 ID：${state.submission.responseId}`
-      : "已成功写入数据库。";
+      ? `结果已保存，记录编号：${state.submission.responseId}`
+      : "结果已保存。";
   } catch (error) {
     state.submission.status = "error";
     state.submission.lastAttemptAt = new Date().toISOString();
-    state.submission.message = `提交失败：${error.message}`;
+    state.submission.message = `保存失败：${error.message}`;
   }
 }
 
@@ -513,13 +511,13 @@ function buildSummaryText(totalScore, rankedDimensions) {
 function getSubmissionDisplayText() {
   switch (state.submission.status) {
     case "success":
-      return "数据库提交成功，结果已完成在线收集。";
+      return "结果已保存，报告可下载留存。";
     case "error":
-      return "数据库提交失败，当前仅保留本地报告。";
+      return "结果暂未在线保存，当前报告仍可下载留存。";
     case "skipped":
-      return "当前为演示模式，报告未写入数据库。";
+      return "报告已生成，可下载保存。";
     case "submitting":
-      return "正在提交数据，请稍候。";
+      return "正在保存结果，请稍候。";
     default:
       return "结果已生成，等待提交。";
   }
@@ -581,15 +579,7 @@ function restoreState() {
 }
 
 function syncConnectionState() {
-  if (hasSupabaseConfig()) {
-    dbStatusText.textContent = "已配置";
-    connectionPill.textContent = "Supabase 在线收数模式";
-    configBanner.textContent = "已检测到 Supabase 配置，作答完成后会尝试写入数据库。";
-  } else {
-    dbStatusText.textContent = "未连接";
-    connectionPill.textContent = "离线演示模式";
-    configBanner.textContent = "当前还没有填写 Supabase 配置，问卷仍可演示，但不会真正写入数据库。";
-  }
+  configBanner.textContent = "作答前请确认你处于相对安静的环境，并尽量按照第一感受选择。";
 }
 
 function hasSupabaseConfig() {
