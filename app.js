@@ -6,49 +6,56 @@ if (!questions.length) {
 }
 
 const scaleOptions = [
-  { value: 1, title: "完全不符合", detail: "与你的真实情况基本不一致" },
-  { value: 2, title: "比较不符合", detail: "只有少部分时候会出现" },
-  { value: 3, title: "不确定", detail: "介于两者之间，难以明确判断" },
-  { value: 4, title: "比较符合", detail: "大多数时候与你的状态相近" },
-  { value: 5, title: "完全符合", detail: "非常贴近你的真实感受" },
+  { value: 1, title: "很不满意", detail: "" },
+  { value: 2, title: "比较不满意", detail: "" },
+  { value: 3, title: "中立", detail: "" },
+  { value: 4, title: "比较满意", detail: "" },
+  { value: 5, title: "很满意", detail: "" },
 ];
 
 const storageKey = "mind-explorer-research-state";
 const reportDescriptions = {
-  "AI依赖": {
-    low: "你对 AI 的依赖度较低，更倾向于依靠现实支持系统与自身判断。",
-    mid: "你会在部分情境下依赖 AI，但整体仍保有一定的自主决策空间。",
-    high: "你对 AI 的功能性或情感性依赖较高，建议留意现实关系与自我判断的平衡。",
+  "家庭支持感": {
+    low: "你对家庭提供的物质与精神支持感受偏低，可能需要更多现实资源与情感支持。",
+    mid: "你对家庭支持的感受处于中等水平，部分方面能够获得支持，部分方面仍有提升空间。",
+    high: "你对家庭支持的感受较稳定，这有助于形成安全感与持续发展的基础。",
+  },
+  "学习自主性": {
+    low: "你在学习与判断中可能较容易依赖外部工具，建议逐步增加独立思考与先行尝试的比例。",
+    mid: "你具备一定学习自主性，但在复杂任务中仍可能借助 AI 过多，需要继续平衡效率与主动思考。",
+    high: "你在学习任务中保有较好的主导感，能够把 AI 作为辅助而不是替代自身能力。",
   },
   "信息自主性": {
-    low: "你在信息筛选与自主判断上容易受到外界干扰，建议训练辨别与整合能力。",
-    mid: "你具备一定信息自主性，但在复杂环境中仍可能出现摇摆。",
-    high: "你在信息筛选、自主判断与观点建立上表现稳定，具备较强的信息掌控感。",
+    low: "你在信息环境中可能较容易被推荐、推送或信息过载牵引，建议建立更清晰的筛选边界。",
+    mid: "你有一定信息判断能力，但面对大量内容时仍可能出现分散、迟疑或消耗感。",
+    high: "你能够较好地区分重要信息与外界干扰，具备稳定的信息筛选和自我判断能力。",
   },
-  "存在主义生死观念": {
-    low: "你在生命意义、有限性与存在思考上可能仍较模糊，适合进一步探索自我价值感。",
-    mid: "你对生死与存在议题有一定思考，但整体尚处于整理与建构阶段。",
-    high: "你对生命意义与存在命题有较强的反思能力，能将其转化为自我理解资源。",
+  "情绪支持自主性": {
+    low: "你在情绪支持上可能较依赖 AI 或虚拟互动，建议加强现实关系与自我安顿能力。",
+    mid: "你能在部分情境下自我调节，但孤独、倾诉或压力时仍可能明显依赖 AI。",
+    high: "你在情绪支持方面具有较好的自主性，能更稳地连接现实支持与自我调节资源。",
   },
-  "未来方向": {
-    low: "你在未来规划与方向感上可能存在较多不确定，建议从小目标开始重建掌控感。",
-    mid: "你对未来有一定设想，但仍需要更稳定的行动路径与意义感支撑。",
-    high: "你在未来方向、行动意义与个人独特性整合上较有优势，具备良好的发展潜力。",
+  "未来能力建设": {
+    low: "你对未来核心能力与个人独特性的建设感可能较弱，建议从可实践的小目标开始。",
+    mid: "你已经意识到未来能力建设的重要性，但仍需要更清晰的路径和持续行动。",
+    high: "你能主动思考并建设 AI 难以替代的能力，具备较好的未来发展主动性。",
   },
 };
 
 const suggestionBank = {
-  "AI依赖": "尝试把一部分情绪支持与决策过程重新带回现实关系或纸笔整理中。",
-  "信息自主性": "建立自己的信息筛选规则，例如记录来源、延迟判断、核对证据。",
-  "存在主义生死观念": "用写作、阅读或谈话方式整理你对生命有限性和价值感的理解。",
-  "未来方向": "把长期不确定拆成更小的可执行目标，逐步积累方向感与行动反馈。",
+  "家庭支持感": "可以尝试梳理当前可获得的家庭资源与外部支持，把模糊的不满转化为具体需求。",
+  "学习自主性": "遇到学习任务时先独立思考几分钟，再使用 AI 辅助校验或扩展思路。",
+  "信息自主性": "为自己设置信息筛选规则，例如限定刷新时间、记录关键来源、延迟采纳推荐。",
+  "情绪支持自主性": "把部分倾诉和安慰需求带回现实关系、运动、书写或专业支持中。",
+  "未来能力建设": "选择一项 AI 难以完全替代的能力，设定短周期练习目标并持续复盘。",
 };
 
 const strengthBank = {
-  "AI依赖": "你在与技术工具的互动上保持了一定自我觉察。",
-  "信息自主性": "你具备主动筛选信息与形成个人判断的基础能力。",
-  "存在主义生死观念": "你愿意面对深层议题，这有助于形成更稳定的自我整合。",
-  "未来方向": "你对未来保持关注，并具备把经验转化为成长线索的潜力。",
+  "家庭支持感": "你能够感受到一定家庭支持，这会成为自我稳定的重要基础。",
+  "学习自主性": "你在学习中保有主导意识，能够把工具使用和自身能力区分开。",
+  "信息自主性": "你具备筛选信息和保持个人判断的能力。",
+  "情绪支持自主性": "你具备一定自我安顿能力，不完全依赖虚拟互动承接情绪。",
+  "未来能力建设": "你正在主动思考未来竞争力和个人独特性。",
 };
 
 const screens = {
@@ -247,25 +254,32 @@ function renderQuestion() {
   progressCurrent.textContent = String(currentNumber);
   progressRing.style.setProperty("--progress", `${progress}deg`);
   optionsContainer.innerHTML = "";
-  scaleOptions.forEach((option) => {
+  const options = Array.isArray(question.options) && question.options.length
+    ? question.options
+    : scaleOptions;
+
+  options.forEach((option, index) => {
+    const optionValue = option.value ?? index + 1;
+    const optionTitle = option.title || option.label || String(optionValue);
+    const optionDetail = option.detail || "";
     const button = document.createElement("button");
     button.type = "button";
     button.className = "scale-option";
-    if (currentAnswer === option.value) {
+    if (currentAnswer === optionValue) {
       button.classList.add("is-selected");
     }
     button.innerHTML = `
       <div class="scale-option__left">
-        <div class="scale-option__badge">${option.value}</div>
+        <div class="scale-option__badge">${optionValue}</div>
         <div class="scale-option__content">
-          <strong>${option.title}</strong>
-          <span>${option.detail}</span>
+          <strong>${optionTitle}</strong>
+          <span>${optionDetail}</span>
         </div>
       </div>
       <div class="scale-option__check">✓</div>
     `;
     button.addEventListener("click", () => {
-      state.answers[state.currentIndex] = option.value;
+      state.answers[state.currentIndex] = optionValue;
       renderQuestion();
       persistState();
     });
@@ -558,6 +572,9 @@ function restoreState() {
     state.answers = Array.isArray(parsed.answers) && parsed.answers.length === questions.length
       ? parsed.answers
       : Array(questions.length).fill(null);
+    if (state.currentIndex < 0 || state.currentIndex >= questions.length) {
+      state.currentIndex = 0;
+    }
     state.startedAt = parsed.startedAt || null;
     state.completedAt = parsed.completedAt || null;
     state.respondent = {
