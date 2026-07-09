@@ -32,7 +32,6 @@ const strengthBank = {
 
 const screens = {
   welcome: document.querySelector("#welcome-screen"),
-  profile: document.querySelector("#profile-screen"),
   question: document.querySelector("#question-screen"),
   report: document.querySelector("#report-screen"),
 };
@@ -64,13 +63,6 @@ const progressTotal = document.querySelector("#progress-total");
 const sidebarTotal = document.querySelector("#sidebar-total");
 const configBanner = document.querySelector("#config-banner");
 const startButton = document.querySelector("#start-button");
-const profileBackButton = document.querySelector("#profile-back-button");
-const profileForm = document.querySelector("#profile-form");
-const respondentCodeInput = document.querySelector("#respondent-code");
-const participantNameInput = document.querySelector("#participant-name");
-const participantEmailInput = document.querySelector("#participant-email");
-const participantNoteInput = document.querySelector("#participant-note");
-const consentCheckbox = document.querySelector("#consent-checkbox");
 const questionSectionLabel = document.querySelector("#question-section-label");
 const questionText = document.querySelector("#question-text");
 const questionCountCurrent = document.querySelector("#question-count-current");
@@ -101,23 +93,10 @@ if (!state.respondent.code) {
   state.respondent.code = generateRespondentCode();
 }
 
-hydrateProfileForm();
-
 startButton.addEventListener("click", () => {
-  showScreen("profile");
-});
-
-profileBackButton.addEventListener("click", () => {
-  showScreen("welcome");
-});
-
-profileForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  state.respondent.code = respondentCodeInput.value.trim();
-  state.respondent.name = participantNameInput.value.trim();
-  state.respondent.email = participantEmailInput.value.trim();
-  state.respondent.note = participantNoteInput.value.trim();
-
+  if (!state.respondent.code) {
+    state.respondent.code = generateRespondentCode();
+  }
   if (!state.startedAt) {
     state.startedAt = new Date().toISOString();
   }
@@ -196,8 +175,6 @@ restartButton.addEventListener("click", () => {
     responseId: "",
     lastAttemptAt: "",
   };
-  consentCheckbox.checked = false;
-  hydrateProfileForm();
   persistState();
   showScreen("welcome");
 });
@@ -526,13 +503,6 @@ function showScreen(target) {
     element.classList.toggle("screen--active", name === target);
   });
   window.scrollTo(0, 0);
-}
-
-function hydrateProfileForm() {
-  respondentCodeInput.value = state.respondent.code;
-  participantNameInput.value = state.respondent.name;
-  participantEmailInput.value = state.respondent.email;
-  participantNoteInput.value = state.respondent.note;
 }
 
 function persistState() {

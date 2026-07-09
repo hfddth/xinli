@@ -181,9 +181,7 @@ button {
 .submission-panel p,
 .report-copy p,
 .feature-item p,
-.report-panel li,
-.field span,
-.checkbox-row span {
+.report-panel li {
   line-height: 1.9;
   font-size: 1.06rem;
 }
@@ -390,7 +388,6 @@ button {
 .report-panel,
 .submission-panel,
 .info-banner,
-.profile-form,
 .completion-card {
   border-radius: 24px;
   background: var(--bg-soft);
@@ -451,43 +448,6 @@ button {
   margin-bottom: 24px;
   color: #7d6127;
   line-height: 1.7;
-}
-
-.profile-form {
-  display: grid;
-  gap: 18px;
-  padding: 28px;
-}
-
-.field {
-  display: grid;
-  gap: 10px;
-}
-
-.field span {
-  font-weight: 600;
-}
-
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: 15px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(18, 36, 59, 0.12);
-  background: rgba(255, 255, 255, 0.84);
-  color: var(--text-dark);
-}
-
-.checkbox-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.checkbox-row input {
-  margin-top: 5px;
 }
 
 .primary-button,
@@ -818,7 +778,6 @@ button {
   .report-dimension-card,
   .report-panel,
   .submission-panel,
-  .profile-form,
   .info-banner {
     border-radius: 20px;
   }

@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=question-text-only-20260710" />
+    <link rel="stylesheet" href="./styles.css?v=direct-question-20260710" />
   </head>
   <body>
     <div class="shell">
@@ -126,47 +126,6 @@
           </button>
         </section>
 
-        <section class="screen" id="profile-screen">
-          <p class="eyebrow">PARTICIPANT PROFILE</p>
-          <h2 class="section-title">作答信息确认</h2>
-          <div class="divider"></div>
-          <p class="section-copy">
-            请确认作答编号。姓名、邮箱与备注均为可选信息，你也可以只保留系统生成的编号。
-          </p>
-
-          <form class="profile-form" id="profile-form">
-            <label class="field">
-              <span>受试者编号</span>
-              <input id="respondent-code" name="respondentCode" type="text" required />
-            </label>
-            <label class="field">
-              <span>姓名或昵称（可选）</span>
-              <input id="participant-name" name="participantName" type="text" />
-            </label>
-            <label class="field">
-              <span>联系邮箱（可选）</span>
-              <input id="participant-email" name="participantEmail" type="email" />
-            </label>
-            <label class="field">
-              <span>备注信息（可选）</span>
-              <textarea id="participant-note" name="participantNote" rows="4"></textarea>
-            </label>
-
-            <label class="checkbox-row">
-              <input id="consent-checkbox" name="consent" type="checkbox" required />
-              <span>我已了解本测评仅用于自我探索与研究参考，并同意按真实感受作答。</span>
-            </label>
-
-            <div class="navigation navigation--stack-mobile">
-              <button class="ghost-button" id="profile-back-button" type="button">← 返回介绍</button>
-              <button class="primary-button primary-button--compact" type="submit">
-                进入答题
-                <span>→</span>
-              </button>
-            </div>
-          </form>
-        </section>
-
         <section class="screen" id="question-screen">
           <div class="question-header">
             <div>
@@ -240,8 +199,8 @@
       </main>
     </div>
 
-    <script src="./supabase-config.js?v=question-text-only-20260710"></script>
-    <script src="./data/questions.js?v=question-text-only-20260710"></script>
-    <script src="./app.js?v=question-text-only-20260710"></script>
+    <script src="./supabase-config.js?v=direct-question-20260710"></script>
+    <script src="./data/questions.js?v=direct-question-20260710"></script>
+    <script src="./app.js?v=direct-question-20260710"></script>
   </body>
 </html>
