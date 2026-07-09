@@ -99,9 +99,6 @@ const questionText = document.querySelector("#question-text");
 const questionCountCurrent = document.querySelector("#question-count-current");
 const questionCountTotal = document.querySelector("#question-count-total");
 const optionsContainer = document.querySelector("#options-container");
-const dimensionTag = document.querySelector("#dimension-tag");
-const dimensionSubtag = document.querySelector("#dimension-subtag");
-const reverseTag = document.querySelector("#reverse-tag");
 const nextButton = document.querySelector("#next-button");
 const prevButton = document.querySelector("#prev-button");
 const reportTotalScore = document.querySelector("#report-total-score");
@@ -251,10 +248,6 @@ function renderQuestion() {
   questionCountCurrent.textContent = String(currentNumber).padStart(2, "0");
   progressCurrent.textContent = String(currentNumber);
   progressRing.style.setProperty("--progress", `${progress}deg`);
-  dimensionTag.textContent = question.dimension;
-  dimensionSubtag.textContent = question.detail;
-  reverseTag.textContent = question.reverse ? "含反向计分" : "正向计分";
-
   optionsContainer.innerHTML = "";
   scaleOptions.forEach((option) => {
     const button = document.createElement("button");
@@ -538,9 +531,11 @@ function showQuestionScreen() {
 }
 
 function showScreen(target) {
+  document.body.dataset.screen = target;
   Object.entries(screens).forEach(([name, element]) => {
     element.classList.toggle("screen--active", name === target);
   });
+  window.scrollTo(0, 0);
 }
 
 function hydrateProfileForm() {
