@@ -77,7 +77,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -108,7 +108,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -139,7 +139,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -170,7 +170,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -201,7 +201,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -232,7 +232,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -263,7 +263,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -294,7 +294,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -325,7 +325,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -356,7 +356,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -387,7 +387,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -418,7 +418,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -449,7 +449,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -480,7 +480,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -511,7 +511,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -542,7 +542,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -573,7 +573,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -604,7 +604,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -635,7 +635,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -666,7 +666,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -697,7 +697,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -728,7 +728,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -759,7 +759,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
@@ -790,7 +790,7 @@ window.MIND_EXPLORER_QUESTIONS = [
       },
       {
         "value": 3,
-        "title": "不确定",
+        "title": "中立",
         "detail": ""
       },
       {
