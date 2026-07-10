@@ -67,27 +67,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -98,27 +98,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -129,27 +129,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -160,27 +160,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -191,27 +191,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -222,27 +222,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -253,27 +253,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -284,27 +284,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -315,27 +315,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -346,27 +346,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -377,27 +377,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -408,27 +408,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -439,27 +439,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -470,27 +470,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -501,27 +501,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -532,27 +532,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -563,27 +563,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -594,27 +594,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -625,27 +625,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -656,27 +656,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -687,27 +687,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -718,27 +718,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -749,27 +749,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
@@ -780,27 +780,27 @@ window.MIND_EXPLORER_QUESTIONS = [
     "options": [
       {
         "value": 1,
-        "title": "很不满意",
+        "title": "完全不符合",
         "detail": ""
       },
       {
         "value": 2,
-        "title": "比较不满意",
+        "title": "比较不符合",
         "detail": ""
       },
       {
         "value": 3,
-        "title": "中立",
+        "title": "不确定",
         "detail": ""
       },
       {
         "value": 4,
-        "title": "比较满意",
+        "title": "比较符合",
         "detail": ""
       },
       {
         "value": 5,
-        "title": "很满意",
+        "title": "完全符合",
         "detail": ""
       }
     ]
