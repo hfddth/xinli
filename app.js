@@ -1,5 +1,6 @@
 const questions = window.MIND_EXPLORER_QUESTIONS || [];
 const supabaseConfig = window.MIND_EXPLORER_SUPABASE_CONFIG || {};
+const apiBaseUrl = String(supabaseConfig.apiBaseUrl || "").replace(/\/+$/, "");
 
 if (!questions.length) {
   throw new Error("Question data failed to load.");
@@ -496,8 +497,19 @@ async function generatePersonalizedReport() {
     optionTitle: getOptionTitle(question, state.answers[index]),
     dimension: getModelDimensionForQuestion(index),
   }));
+  if (isStaticGitHubPages()) {
+    state.report.ai = {
+      status: "success",
+      source: "client_rule_fallback",
+      report: createLocalPersonalizedReport(state.report.model, responses),
+      error: "",
+    };
+    renderReport();
+    persistState();
+    return;
+  }
   try {
-    const response = await fetch("./api/ai-report", {
+    const response = await fetch(getApiUrl("/api/ai-report"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model: state.report.model, responses }),
@@ -511,10 +523,64 @@ async function generatePersonalizedReport() {
       error: result.warning || "",
     };
   } catch (error) {
-    state.report.ai = { status: "error", source: "", report: null, error: error.message };
+    state.report.ai = {
+      status: "success",
+      source: "client_rule_fallback",
+      report: createLocalPersonalizedReport(state.report.model, responses),
+      error: `在线解读服务暂不可用，已生成本机规则化解读：${getSafeErrorMessage(error)}`,
+    };
   }
   renderReport();
   persistState();
+}
+
+function createLocalPersonalizedReport(model, responses) {
+  const dimensions = Array.isArray(model?.dimensions) ? model.dimensions : [];
+  const sortedDimensions = [...dimensions].sort(
+    (left, right) => Number(right.percentile || 0) - Number(left.percentile || 0),
+  );
+  const lowerDimensions = [...dimensions]
+    .sort((left, right) => Number(left.percentile || 0) - Number(right.percentile || 0))
+    .slice(0, 2);
+  const highest = sortedDimensions[0];
+  const risk = model?.risk || {};
+  const judgment = personalityJudgments[Number(model?.profile?.class)] || personalityJudgments[1];
+  const dimensionReports = dimensions.map((dimension) => ({
+    name: dimension.name,
+    evaluation: dimension.note || "该结果可作为后续自我观察的线索。",
+    specific_observations: responses
+      .filter((item) => item.dimension === dimension.name)
+      .slice(0, 2)
+      .map((item) => `在“${item.text}”这一题上，你选择了“${item.optionTitle}”。`),
+  }));
+  const strengths = lowerDimensions.map((dimension) => {
+    if (dimension.name === "认知替代") return "你的作答反映出一定的独立思考与判断空间。";
+    if (dimension.name === "价值坚守") return "你的作答反映出对个人价值与独特性的相对稳定确认。";
+    return `“${displayDimensionName(dimension.name)}”的关注水平相对较低，这可能是目前可以依靠的一项个人资源。`;
+  });
+
+  return {
+    label: judgment.name,
+    brief: risk.highRisk
+      ? "结果提示你近期可能更需要留意内在节奏与支持来源。类似感受在压力、变化或信息密集阶段并不少见，分数只用于帮助观察。"
+      : "结果呈现出一组有高有低的个人倾向，可作为理解自己如何使用 AI、筛选信息和维持价值方向的线索。",
+    dimension_reports: dimensionReports,
+    situations: [
+      "问卷没有直接测量学业表现、睡眠时长或关系质量；部分人可能在压力较大时感到注意分配或作息节奏受到影响，建议结合自己的实际体验观察。",
+    ],
+    strengths: strengths.length
+      ? strengths
+      : ["你愿意完成系统作答并查看反馈，本身体现了自我观察与调整意愿。"],
+    suggestions: [
+      highest
+        ? (suggestionBank[highest.name] || `可以从“${displayDimensionName(highest.name)}”相关的一个具体场景开始观察。`)
+        : "可以从一个具体场景开始练习“先自己想，再请 AI 补充”。",
+      "如果信息过密让你疲惫，可以为自己保留一段不接收推送的安静时间。",
+      "有需要时，可尝试把部分感受带回可信任的现实关系中交流。",
+    ],
+    profile_interpretation: `本次作答呈现为“${model?.profile?.name || judgment.profile}”。这一归类只描述本次作答中呈现的与 AI 相处方式，不代表对个人作出固定判断。`,
+    reference_notice: "本报告根据本次问卷作答生成，仅供自我观察与研究参考，不替代专业支持。",
+  };
 }
 
 function renderModelReport(modelResult) {
@@ -630,13 +696,20 @@ async function submitResponse() {
     return;
   }
 
+  if (isStaticGitHubPages()) {
+    state.submission.status = "skipped";
+    state.submission.lastAttemptAt = new Date().toISOString();
+    state.submission.message = "完整报告已保存在当前浏览器中。GitHub Pages 不提供后端存储；如需集中保存问卷，请使用腾讯云正式站。";
+    return;
+  }
+
   state.submission.status = "submitting";
   state.submission.message = "正在匿名保存到腾讯云，请稍候...";
   renderReport();
 
   const payload = buildSubmissionPayload();
   try {
-    const response = await fetch("./api/responses", {
+    const response = await fetch(getApiUrl("/api/responses"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -645,8 +718,7 @@ async function submitResponse() {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || `服务器返回 ${response.status}`);
+      throw new Error(`服务器返回 ${response.status}`);
     }
 
     const result = await response.json();
@@ -659,8 +731,22 @@ async function submitResponse() {
   } catch (error) {
     state.submission.status = "error";
     state.submission.lastAttemptAt = new Date().toISOString();
-    state.submission.message = `保存失败：${error.message}`;
+    state.submission.message = `云端保存暂不可用，但完整报告已保存在当前浏览器中。${getSafeErrorMessage(error)}`;
   }
+}
+
+function isStaticGitHubPages() {
+  return window.location.hostname.endsWith(".github.io") && !apiBaseUrl;
+}
+
+function getApiUrl(path) {
+  return apiBaseUrl ? `${apiBaseUrl}${path}` : `.${path}`;
+}
+
+function getSafeErrorMessage(error) {
+  const message = String(error?.message || "请求未完成。");
+  if (/<\/?[a-z][\s\S]*>/i.test(message)) return "服务器未接受本次请求。";
+  return message.length > 120 ? `${message.slice(0, 120)}…` : message;
 }
 
 function buildSubmissionPayload() {
