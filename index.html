@@ -6,10 +6,10 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Mind Explorer | 心理探索测评</title>
+    <title>Mind Explorer | AI时代心理探索计划</title>
     <meta
       name="description"
-      content="Mind Explorer 心理探索测评，提供结构化作答、自动计分与个人报告生成。"
+      content="AI时代心理探索计划，帮助你观察自己在人机协作中的心理状态与内在资源。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=neutral-options-small-title-20260710" />
+    <link rel="stylesheet" href="./styles.css?v=theta-note-20260823-1" />
   </head>
   <body>
     <div class="shell">
@@ -26,16 +26,16 @@
           <div class="brand-mark">◎</div>
           <div>
             <p class="brand-en">Mind Explorer</p>
-            <p class="brand-cn">心理探索计划</p>
+            <p class="brand-cn">AI时代心理探索计划</p>
           </div>
         </div>
 
         <section class="sidebar-copy">
           <p class="eyebrow">ASSESSMENT</p>
-          <h1 class="sidebar-title">心理探索测评</h1>
+          <h1 class="sidebar-title">当AI替你写作业、做判断、陪你聊天——你的内心，还好吗？</h1>
           <div class="divider"></div>
           <p class="sidebar-text">
-            通过结构化题目了解你的心理状态、行为倾向与自我调节资源，完成后自动生成个人测评报告。
+            在AI时代，重新确认『我是谁』
           </p>
         </section>
 
@@ -47,7 +47,7 @@
               <span class="progress-ring__total" id="progress-total">/ 26</span>
             </div>
           </div>
-          <p class="progress-hint">预计用时 5-8 分钟</p>
+          <p class="progress-hint">预计用时约 3 分钟</p>
         </section>
 
         <section class="system-panel">
@@ -57,7 +57,7 @@
           </div>
           <div class="system-row">
             <span>预计用时</span>
-            <strong>5-8 分钟</strong>
+            <strong>约 3 分钟</strong>
           </div>
           <div class="system-row">
             <span>结果形式</span>
@@ -74,7 +74,7 @@
           <span class="privacy-icon">🔒</span>
           <div>
             <p>隐私保护中</p>
-            <small>请在安静环境中独立作答，报告仅用于自我理解与研究参考，不作为医学诊断依据。</small>
+            <small>请在安静环境中独立作答，报告仅用于自我理解与研究参考，不替代专业评估或支持。</small>
           </div>
         </div>
       </aside>
@@ -83,35 +83,50 @@
         <section class="screen screen--active" id="welcome-screen">
           <p class="eyebrow">WELCOME TO</p>
           <h2 class="hero-title">Mind Explorer</h2>
-          <p class="hero-subtitle">心理探索计划</p>
+          <p class="hero-subtitle">AI时代心理探索计划</p>
           <div class="divider"></div>
 
-          <div class="hero-body">
-            <p>这是一份面向自我探索与研究参考的心理测评。</p>
-            <p>请根据近期真实感受作答，系统会自动完成计分并生成个人报告。</p>
-            <p>测评结果用于帮助你理解当前状态与发展资源，不作为医学诊断或治疗建议。</p>
+          <div class="hero-body survey-guidance">
+            <p>同学你好！</p>
+            <p>
+              你有没有过一瞬间，对着屏幕发呆，心里突然冒出一个念头：“离开AI，我还能不能行？”或者看到AI的新功能，隐隐担心自己会被“优化”？
+            </p>
+            <p>
+              别紧张，这不是考试，也不是审判。我们想帮你照见，在AI浪潮扑面而来时，你内心真实的底气或不安。所有答案没有对错，只有你最真实的感受。
+            </p>
+            <p>
+              你只需要花3分钟，作答完26道题，系统会即时生成一份专属于你的个人报告，帮你看见自己与AI相处时真实的状态与资源。它不替代专业评估，但一定值得你认真对待。
+            </p>
+            <p>现在，请深呼吸，开始吧！</p>
+            <section class="ai-definition" aria-labelledby="ai-definition-title">
+              <h3 id="ai-definition-title">关于AI</h3>
+              <p>
+                本问卷中提到的“AI”指豆包、DeepSeek、ChatGPT、文心一言、Kimi等能够进行对话、回答问题和生成内容的智能工具。请根据您使用这类工具的实际情况和感受作答。
+              </p>
+            </section>
           </div>
 
+          <h3 class="feature-heading">核心功能</h3>
           <div class="feature-list">
             <article class="feature-item">
               <span class="feature-icon">◎</span>
               <div>
                 <h3>结构化测评</h3>
-                <p>围绕多个心理维度进行题目设计，帮助你更系统地观察自身状态。</p>
+                <p>围绕AI情境下意义体验设计题目，帮你系统观察自己在人机协作中的心理状态，而非泛泛的性格测试。</p>
               </div>
             </article>
             <article class="feature-item">
               <span class="feature-icon">◌</span>
               <div>
                 <h3>自动计分</h3>
-                <p>作答完成后即时完成分数换算，并呈现清晰的综合结果。</p>
+                <p>作答结束后即时完成能力分数换算，基于项目反应理论与机器学习模型输出结果。</p>
               </div>
             </article>
             <article class="feature-item">
               <span class="feature-icon">◍</span>
               <div>
                 <h3>个人报告</h3>
-                <p>生成优势亮点与提升建议，便于后续自我回顾与整理。</p>
+                <p>呈现四维雷达图与个人形态画像，便于后续自我回顾与整理。</p>
               </div>
             </article>
           </div>
@@ -120,10 +135,19 @@
             作答前请确认你处于相对安静的环境，并尽量按照第一感受选择。
           </div>
 
-          <button class="primary-button" id="start-button" type="button">
+          <label class="consent-card" for="storage-consent">
+            <input id="storage-consent" type="checkbox" />
+            <span>
+              <strong>我同意匿名保存本次研究数据</strong>
+              <small>系统仅匿名保存26题原始选项，不保存模型结果、个人报告、姓名、邮箱或原始 IP。你可以在提交前退出，不产生服务器记录。</small>
+            </span>
+          </label>
+
+          <button class="primary-button" id="start-button" type="button" disabled>
             开始填写
             <span>→</span>
           </button>
+          <a class="preview-link" href="./report-preview.html?v=report-template-20260821-2">先查看 AI 个体报告预览</a>
         </section>
 
         <section class="screen" id="question-screen">
@@ -159,7 +183,7 @@
           <div class="report-topline">
             <div class="report-score-card">
               <span class="score-card__value" id="report-total-score">0</span>
-              <span class="score-card__label">综合总分 / 100</span>
+              <span class="score-card__label" id="report-score-label">模型综合观察 / 100</span>
             </div>
             <div class="report-copy">
               <p id="report-summary-text"></p>
@@ -168,18 +192,28 @@
             </div>
           </div>
 
+          <p class="dimension-direction-note">计分方向说明：四个维度的能力分数均为数值越低，心理状态越健康。</p>
           <div class="report-grid" id="dimension-report-list"></div>
 
-          <div class="report-panels">
-            <article class="report-panel">
-              <h3>优势与亮点</h3>
-              <ul id="strength-list"></ul>
+          <section class="model-report" id="model-report" hidden>
+            <article class="report-panel radar-panel">
+              <div>
+                <p class="eyebrow">ABILITY RADAR</p>
+                <h3>四维能力百分位雷达图</h3>
+                <p class="model-footnote">能力分数越低，心理状态越健康；百分位基于 748 人常模，百分位越高表示越需要留意。能力维度与空虚风险是不同指标，应结合阅读。</p>
+              </div>
+              <canvas id="ability-radar" width="620" height="420" aria-label="四维能力百分位雷达图"></canvas>
             </article>
-            <article class="report-panel">
-              <h3>提升建议</h3>
-              <ul id="suggestion-list"></ul>
+            <article class="report-panel personality-judgment-panel" id="personality-judgment-panel">
+              <div>
+                <p class="eyebrow">PERSONALITY INSIGHT</p>
+                <span class="personality-judgment-type" id="personality-judgment-type">AI 互动类型</span>
+                <h3>画像判断：<span id="personality-judgment-name">正在计算</span></h3>
+              </div>
+              <p id="personality-judgment-summary"></p>
             </article>
-          </div>
+            <p class="model-metrics" id="model-metrics"></p>
+          </section>
 
           <div class="submission-panel">
             <div>
@@ -187,8 +221,7 @@
               <p id="submission-detail-text">尚未提交。</p>
             </div>
             <div class="submission-actions">
-              <button class="ghost-button" id="retry-submit-button" type="button">重新保存</button>
-              <button class="ghost-button" id="download-report-button" type="button">下载个人报告</button>
+              <a class="ghost-button ai-report-button" id="ai-report-button" href="./personal-report.html?v=risk-wording-20260831-1" target="_blank" rel="noopener">详细解读</a>
               <button class="primary-button primary-button--compact" id="restart-button" type="button">
                 重新作答
                 <span>↺</span>
@@ -201,6 +234,7 @@
 
     <script src="./supabase-config.js?v=neutral-options-small-title-20260710"></script>
     <script src="./data/questions.js?v=neutral-options-small-title-20260710"></script>
-    <script src="./app.js?v=neutral-options-small-title-20260710"></script>
+    <script src="./model-runtime.js?v=report-recovery-20260822-1"></script>
+    <script src="./app.js?v=theta-note-20260823-1"></script>
   </body>
 </html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <title>详细解读 | Mind Explorer</title>
+    <meta name="description" content="根据本次测评结果生成的详细解读与个人报告。" />
+    <link rel="stylesheet" href="./styles.css?v=theta-note-20260823-1" />
+  </head>
+  <body class="report-preview-page personal-report-page">
+    <header class="preview-header personal-report-toolbar">
+      <button class="ghost-button" id="close-personal-report" type="button">关闭</button>
+      <span>Mind Explorer · 详细解读</span>
+      <button class="primary-button primary-button--compact" id="save-personal-report" type="button">保存报告</button>
+    </header>
+
+    <main class="preview-report" id="personal-report" hidden>
+      <section class="preview-cover">
+        <p class="eyebrow">AI-ASSISTED INDIVIDUAL REPORT</p>
+        <h1>AI情境下存在空虚感个体报告</h1>
+        <p class="preview-lead" id="personal-report-lead">正在整理报告…</p>
+        <div class="preview-meta">
+          <span id="personal-report-code"></span>
+          <span id="personal-report-date"></span>
+          <span>常模样本：748 人</span>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>01</span><h2>总体概览</h2></div>
+        <p id="personal-summary"></p>
+        <div class="preview-kpi-grid">
+          <article><small>研究性风险提示</small><strong id="personal-risk-prob">—</strong><p id="personal-risk-level"></p></article>
+          <article><small>AI互动形态</small><strong id="personal-profile">—</strong><p id="personal-personality"></p></article>
+        </div>
+        <div class="preview-radar-wrap">
+          <div>
+            <h3>四维能力分数与百分位</h3>
+            <p>四个维度的能力分数均为数值越低，心理状态越健康。雷达图以常模百分位绘制；百分位越高，表示该维度越值得留意，不代表对个人的固定判断。</p>
+          </div>
+          <canvas id="personal-radar" width="640" height="440" aria-label="四维百分位雷达图"></canvas>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>02</span><h2>空虚倾向解读</h2></div>
+        <p id="personal-risk-copy"></p>
+        <div class="risk-standard-results" aria-label="两条研究参考线的判定结果">
+          <article><span>初筛标准</span><strong id="personal-screening-result">—</strong></article>
+          <article><span>较高标准</span><strong id="personal-higher-result">—</strong></article>
+        </div>
+        <div class="preview-note" id="personal-risk-advice"></div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>03</span><h2>各维度得分与回顾</h2></div>
+        <p class="dimension-direction-note">计分方向说明：四个维度的能力分数均为数值越低，心理状态越健康。</p>
+        <p>以下结果描述你在本次作答中的相对位置。分数偏高时，类似感受在压力、变化或信息密集的阶段并不少见，可以把它当作自我观察的线索。</p>
+        <div class="preview-dimensions" id="personal-dimensions"></div>
+        <div class="preview-observations">
+          <h3>具体题目回顾</h3>
+          <div id="personal-observations"></div>
+          <p class="preview-muted">这里只转述你选择的原题与原选项，不由单个选项引申性格或状态判断。</p>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>04</span><h2>AI互动形态解读</h2></div>
+        <div class="preview-profile-card">
+          <div class="preview-avatar" aria-hidden="true" id="personal-profile-symbol">◎</div>
+          <div class="preview-profile-card__copy">
+            <h3 id="personal-profile-title"></h3>
+            <p id="personal-profile-copy"></p>
+            <button class="primary-button primary-button--compact" id="view-personality-card" type="button">查看画像卡片</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>05</span><h2>关于这些维度的补充信息</h2></div>
+        <div class="personal-supplements" id="personal-supplements"></div>
+      </section>
+
+      <section class="preview-section preview-resource-section">
+        <div class="preview-section__heading"><span>06</span><h2>个人资源与可尝试步骤</h2></div>
+        <div class="preview-two-columns">
+          <article><h3>客观优势与韧性</h3><ul id="personal-strengths"></ul></article>
+          <article><h3>可尝试的小步骤</h3><ul id="personal-suggestions"></ul></article>
+        </div>
+      </section>
+
+      <section class="preview-section preview-declaration">
+        <div class="preview-section__heading"><span>07</span><h2>重要声明</h2></div>
+        <p>本报告仅基于本次问卷作答与研究常模，由模型和AI辅助整理生成。它不构成对个人的固定判断，也不能替代专业支持，仅用于帮助你理解此刻的自我感受。每个人的体验都可能随情境和时间变化；如你对自己的状态有疑虑，可以向具备资质的专业人员咨询。</p>
+      </section>
+    </main>
+
+    <main class="ai-reader-shell" id="personal-report-empty" hidden>
+      <section class="ai-reader-empty">
+        <h2>暂时没有可展示的个人报告</h2>
+        <p>请先完成测评，报告生成后再从结果页进入。</p>
+        <button class="primary-button primary-button--compact" id="return-to-test" type="button">返回测评</button>
+      </section>
+    </main>
+
+    <dialog class="personality-card-dialog" id="personality-card-dialog">
+      <div class="personality-card-dialog__toolbar">
+        <strong>AI互动画像卡片</strong>
+        <div>
+          <button class="ghost-button" id="close-personality-card" type="button">关闭</button>
+          <button class="primary-button primary-button--compact" id="save-personality-card" type="button">保存画像卡片</button>
+        </div>
+      </div>
+      <canvas id="personality-card-canvas" width="1080" height="1520" hidden></canvas>
+      <img id="personality-card-image" alt="AI互动画像卡片，可长按保存图片" />
+    </dialog>
+
+    <script src="./data/questions.js?v=report-template-20260821-2"></script>
+    <script src="./personal-report.js?v=risk-wording-20260831-1"></script>
+  </body>
+</html>

@@ -3,93 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mind Explorer | 后台导出</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Mind Explorer | 问卷管理后台</title>
+    <link rel="stylesheet" href="./styles.css?v=admin-live-20260821-1" />
   </head>
-  <body>
-    <div class="shell shell--admin">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="brand-mark">◎</div>
-          <div>
-            <p class="brand-en">Mind Explorer</p>
-            <p class="brand-cn">数据管理后台</p>
-          </div>
+  <body class="admin-live-page">
+    <main class="admin-live-shell">
+      <header class="admin-live-header">
+        <div>
+          <p class="eyebrow">MIND EXPLORER · SECURE ADMIN</p>
+          <h1>问卷管理后台</h1>
+          <p>页面仅能通过 SSH 加密通道访问，每 15 秒自动同步一次。</p>
         </div>
-
-        <section class="sidebar-copy">
-          <p class="eyebrow">ADMIN EXPORT</p>
-          <h1 class="sidebar-title">结果导出页</h1>
-          <div class="divider"></div>
-          <p class="sidebar-text">
-            这个页面用于研究者管理员下载所有受试者作答结果。请配合 Supabase Edge Function 一起使用。
-          </p>
-        </section>
-
-        <section class="system-panel">
-          <div class="system-row">
-            <span>导出接口</span>
-            <strong id="admin-function-status">未配置</strong>
-          </div>
-          <div class="system-row">
-            <span>推荐格式</span>
-            <strong>CSV / JSON</strong>
-          </div>
-        </section>
-      </aside>
-
-      <main class="main-panel">
-        <div class="status-row">
-          <a class="status-link" href="./index.html">返回问卷页</a>
+        <div class="admin-live-actions">
+          <button class="ghost-button" id="refresh-admin" type="button">立即刷新</button>
+          <a class="primary-button primary-button--compact" href="./api/admin/export.csv">导出全部 CSV</a>
         </div>
-
-        <section class="screen screen--active">
-          <p class="eyebrow">EXPORT ALL RESPONSES</p>
-          <h2 class="section-title">导出所有受试者结果</h2>
-          <div class="divider"></div>
-          <p class="section-copy">
-            请输入管理员导出令牌。页面会调用 Supabase Edge Function 返回 CSV 或 JSON 文件。
-          </p>
-
-          <form class="profile-form" id="admin-export-form">
-            <label class="field">
-              <span>管理员导出令牌</span>
-              <input id="admin-token" name="adminToken" type="password" required />
-            </label>
-            <label class="field">
-              <span>导出格式</span>
-              <select id="export-format" name="format">
-                <option value="csv">CSV</option>
-                <option value="json">JSON</option>
-              </select>
-            </label>
-
-            <div class="navigation navigation--stack-mobile">
-              <button class="ghost-button" id="preview-endpoint-button" type="button">查看接口配置</button>
-              <button class="primary-button primary-button--compact" type="submit">
-                开始导出
-                <span>↓</span>
-              </button>
-            </div>
-          </form>
-
-          <div class="submission-panel submission-panel--compact">
-            <div>
-              <h3>执行状态</h3>
-              <p id="admin-status-text">尚未发起导出。</p>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-
-    <script src="./supabase-config.js"></script>
-    <script src="./admin.js"></script>
+      </header>
+      <section class="admin-live-kpis" aria-label="问卷统计">
+        <article><span>全部问卷</span><strong id="total-count">—</strong></article>
+        <article><span>今日新增</span><strong id="today-count">—</strong></article>
+        <article><span>最近同步</span><strong id="last-sync">—</strong></article>
+      </section>
+      <section class="admin-live-panel">
+        <div class="admin-live-panel__heading">
+          <div><h2>最近提交</h2><p id="admin-status">正在读取腾讯云数据库…</p></div>
+          <label>搜索记录 <input id="admin-search" type="search" placeholder="匿名编号或记录编号" /></label>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>完成时间</th><th>匿名编号</th><th>原始选项</th><th>操作</th></tr></thead>
+            <tbody id="admin-records"><tr><td colspan="4">正在加载…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <dialog class="admin-detail-dialog" id="admin-detail">
+        <div class="admin-detail-toolbar"><h2>问卷详情</h2><button class="ghost-button" id="close-detail" type="button">关闭</button></div>
+        <div id="admin-detail-content"></div>
+      </dialog>
+    </main>
+    <script src="./admin.js?v=answers-only-20260822-1"></script>
   </body>
 </html>

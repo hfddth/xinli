@@ -30,6 +30,29 @@ const strengthBank = {
   "综合结果": "你已经完成了对当前状态的系统梳理，这本身就是自我理解的重要一步。",
 };
 
+const personalityJudgments = {
+  1: {
+    name: "清醒掌舵者",
+    profile: "AI稳健型",
+    summary: "你会使用 AI 提升效率，同时通常保留自己的判断，在技术便利与自我主导之间保持平衡。",
+  },
+  2: {
+    name: "高频共鸣者",
+    profile: "AI共生型",
+    summary: "你较常与 AI 协作，有时也会从互动中获得陪伴与支持，能够较快适应新的技术工具。",
+  },
+  3: {
+    name: "边界拉扯者",
+    profile: "AI矛盾型",
+    summary: "你在借助 AI 提升效率的同时，也可能关注自主性与个人价值，正在形成更清晰的使用边界。",
+  },
+  4: {
+    name: "独立守界者",
+    profile: "AI免疫型",
+    summary: "你对 AI 保持较清晰的边界，通常更依赖自身判断与节奏，不容易被外部推荐牵引。",
+  },
+};
+
 const screens = {
   welcome: document.querySelector("#welcome-screen"),
   question: document.querySelector("#question-screen"),
@@ -48,6 +71,7 @@ const state = {
     note: "",
   },
   report: null,
+  consent: false,
   submission: {
     status: "idle",
     message: "尚未提交。",
@@ -56,6 +80,8 @@ const state = {
   },
 };
 
+let reportRecoveryPromise = null;
+
 const progressCard = document.querySelector("#progress-card");
 const progressRing = document.querySelector("#progress-ring");
 const progressCurrent = document.querySelector("#progress-current");
@@ -63,6 +89,7 @@ const progressTotal = document.querySelector("#progress-total");
 const sidebarTotal = document.querySelector("#sidebar-total");
 const configBanner = document.querySelector("#config-banner");
 const startButton = document.querySelector("#start-button");
+const storageConsent = document.querySelector("#storage-consent");
 const questionSectionLabel = document.querySelector("#question-section-label");
 const questionText = document.querySelector("#question-text");
 const questionCountCurrent = document.querySelector("#question-count-current");
@@ -71,16 +98,20 @@ const optionsContainer = document.querySelector("#options-container");
 const nextButton = document.querySelector("#next-button");
 const prevButton = document.querySelector("#prev-button");
 const reportTotalScore = document.querySelector("#report-total-score");
+const reportScoreLabel = document.querySelector("#report-score-label");
 const reportSummaryText = document.querySelector("#report-summary-text");
 const reportSubmissionStatus = document.querySelector("#report-submission-status");
 const reportResponseCode = document.querySelector("#report-response-code");
 const dimensionReportList = document.querySelector("#dimension-report-list");
-const strengthList = document.querySelector("#strength-list");
-const suggestionList = document.querySelector("#suggestion-list");
 const submissionDetailText = document.querySelector("#submission-detail-text");
-const retrySubmitButton = document.querySelector("#retry-submit-button");
-const downloadReportButton = document.querySelector("#download-report-button");
 const restartButton = document.querySelector("#restart-button");
+const aiReportButton = document.querySelector("#ai-report-button");
+const modelReport = document.querySelector("#model-report");
+const abilityRadar = document.querySelector("#ability-radar");
+const personalityJudgmentType = document.querySelector("#personality-judgment-type");
+const personalityJudgmentName = document.querySelector("#personality-judgment-name");
+const personalityJudgmentSummary = document.querySelector("#personality-judgment-summary");
+const modelMetrics = document.querySelector("#model-metrics");
 
 sidebarTotal.textContent = String(questions.length);
 questionCountTotal.textContent = String(questions.length);
@@ -93,7 +124,16 @@ if (!state.respondent.code) {
   state.respondent.code = generateRespondentCode();
 }
 
+storageConsent.checked = Boolean(state.consent);
+startButton.disabled = !state.consent;
+storageConsent.addEventListener("change", () => {
+  state.consent = storageConsent.checked;
+  startButton.disabled = !state.consent;
+  persistState();
+});
+
 startButton.addEventListener("click", () => {
+  if (!state.consent) return;
   if (!state.respondent.code) {
     state.respondent.code = generateRespondentCode();
   }
@@ -125,6 +165,10 @@ nextButton.addEventListener("click", async () => {
     showScreen("report");
     renderReport();
     persistState();
+    await enrichReportWithModel();
+    renderReport();
+    persistState();
+    await generatePersonalizedReport();
     await submitResponse();
     renderReport();
     persistState();
@@ -136,24 +180,10 @@ nextButton.addEventListener("click", async () => {
   persistState();
 });
 
-retrySubmitButton.addEventListener("click", async () => {
-  retrySubmitButton.disabled = true;
-  await submitResponse();
-  renderReport();
-  persistState();
-  retrySubmitButton.disabled = false;
-});
-
-downloadReportButton.addEventListener("click", () => {
-  if (!state.report) {
-    return;
+aiReportButton.addEventListener("click", (event) => {
+  if (state.report?.ai?.status !== "success" || !state.report?.ai?.report) {
+    event.preventDefault();
   }
-  const payload = {
-    respondent: state.respondent,
-    report: state.report,
-    submission: state.submission,
-  };
-  downloadJson(payload, `${state.respondent.code || "mind-explorer"}-report.json`);
 });
 
 restartButton.addEventListener("click", () => {
@@ -169,6 +199,9 @@ restartButton.addEventListener("click", () => {
     note: "",
   };
   state.report = null;
+  state.consent = false;
+  storageConsent.checked = false;
+  startButton.disabled = true;
   state.submission = {
     status: "idle",
     message: "尚未提交。",
@@ -183,6 +216,7 @@ if (state.report) {
   progressCard.hidden = false;
   showScreen("report");
   renderReport();
+  void recoverIncompleteReport();
 } else if (state.answers.some((answer) => answer != null) || state.startedAt) {
   progressCard.hidden = false;
   showQuestionScreen();
@@ -298,6 +332,15 @@ function buildReport() {
     strengths: highDimensions.map(([dimension]) => strengthBank[dimension]),
     suggestions: lowDimensions.map(([dimension]) => suggestionBank[dimension]),
     summaryText: buildSummaryText(totalScore, rankedDimensions),
+    model: null,
+    modelStatus: "loading",
+    modelError: "",
+    ai: {
+      status: "waiting",
+      source: "",
+      report: null,
+      error: "",
+    },
   };
 }
 
@@ -309,45 +352,277 @@ function renderReport() {
   progressCurrent.textContent = String(questions.length);
   progressRing.style.setProperty("--progress", "360deg");
 
-  reportTotalScore.textContent = String(state.report.totalScore);
-  reportSummaryText.textContent = state.report.summaryText;
+  const modelResult = state.report.model;
+  if (modelResult) {
+    const averagePercentile = Math.round(
+      modelResult.dimensions.reduce((sum, item) => sum + item.percentile, 0) /
+        modelResult.dimensions.length,
+    );
+    reportTotalScore.textContent = String(averagePercentile);
+    reportScoreLabel.textContent = "四维平均百分位 / 100";
+    reportSummaryText.textContent = `你的四维平均百分位为 P${averagePercentile}。剖面结果为“${modelResult.profile.name}”。不同维度应分别理解，不用于给个人作定性判断。`;
+  } else {
+    reportTotalScore.textContent = state.report.modelStatus === "error" ? "--" : "…";
+    reportScoreLabel.textContent = "模型综合观察 / 100";
+    reportSummaryText.textContent = state.report.modelStatus === "error"
+      ? "模型评分暂时未能完成，请下载作答数据后联系维护人员。"
+      : "正在载入评分模型并计算常模百分位，请稍候。";
+  }
   reportResponseCode.textContent = `受试者编号：${state.respondent.code} ｜ 用时：${formatDuration(state.report.durationSeconds)}`;
   reportSubmissionStatus.textContent = getSubmissionDisplayText();
   submissionDetailText.textContent = state.submission.message;
+  const aiReady = state.report.ai?.status === "success" && state.report.ai?.report;
+  const aiLoading = state.report.ai?.status === "loading";
+  aiReportButton.classList.toggle("is-disabled", !aiReady);
+  aiReportButton.setAttribute("aria-disabled", String(!aiReady));
+  aiReportButton.tabIndex = aiReady ? 0 : -1;
+  aiReportButton.textContent = aiReady
+    ? "详细解读"
+    : aiLoading
+      ? "详细解读生成中…"
+      : "详细解读暂不可用";
 
   dimensionReportList.innerHTML = "";
-  Object.entries(state.report.normalizedScores).forEach(([dimension, score]) => {
+  const reportDimensions = modelResult
+    ? modelResult.dimensions
+    : Object.entries(state.report.normalizedScores).map(([name, percentile]) => ({
+        name,
+        percentile,
+        theta: null,
+        level: getLevelLabel(percentile),
+        note: getDimensionDescription(name, percentile),
+      }));
+  reportDimensions.forEach((dimension) => {
+    const score = dimension.percentile;
     const card = document.createElement("article");
     card.className = "report-dimension-card";
     card.innerHTML = `
       <div class="dimension-score-row">
         <div>
-          <h3>${dimension}</h3>
-          <p>${getLevelLabel(score)}</p>
+          <h3>${escapeHtml(displayDimensionName(dimension.name))}</h3>
+          <p>${escapeHtml(dimension.level)}${dimension.theta == null ? "" : ` · 能力分数 θ ${dimension.theta.toFixed(3)}`}</p>
         </div>
-        <strong>${score}</strong>
+        <strong>P${score}</strong>
       </div>
+      ${dimension.theta == null ? "" : `<p class="theta-explanation">${escapeHtml(getThetaExplanation(dimension.theta))}</p>`}
       <div class="dimension-bar"><span style="width:${score}%"></span></div>
-      <p class="dimension-note">${getDimensionDescription(dimension, score)}</p>
+      <p class="dimension-note">${escapeHtml(dimension.note)}</p>
     `;
     dimensionReportList.appendChild(card);
   });
 
-  strengthList.innerHTML = "";
-  state.report.strengths.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    strengthList.appendChild(li);
+  renderModelReport(modelResult);
+}
+
+async function enrichReportWithModel() {
+  if (!state.report || !window.MindExplorerModel) {
+    if (state.report) {
+      state.report.modelStatus = "error";
+      state.report.modelError = "评分组件未加载";
+    }
+    return;
+  }
+  state.report.modelStatus = "loading";
+  state.report.modelError = "";
+  renderReport();
+  persistState();
+  try {
+    let model;
+    let lastError;
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      try {
+        model = await window.MindExplorerModel.load();
+        break;
+      } catch (error) {
+        lastError = error;
+        if (attempt === 0) {
+          await new Promise((resolve) => setTimeout(resolve, 600));
+        }
+      }
+    }
+    if (!model) throw lastError || new Error("评分模型未能载入");
+    const optionTitles = state.answers.map((answer, index) => getOptionTitle(questions[index], answer));
+    state.report.model = window.MindExplorerModel.score(model, state.answers, optionTitles);
+    state.report.modelStatus = "success";
+    state.report.modelError = "";
+  } catch (error) {
+    state.report.modelStatus = "error";
+    state.report.modelError = error.message;
+  }
+}
+
+async function recoverIncompleteReport() {
+  if (!state.report) return;
+  if (reportRecoveryPromise) return reportRecoveryPromise;
+
+  const needsModel = !state.report.model || state.report.modelStatus !== "success";
+  const needsAi = state.report.ai?.status !== "success" || !state.report.ai?.report;
+  if (!needsModel && !needsAi) return;
+
+  reportRecoveryPromise = (async () => {
+    let recoveredContent = false;
+    if (needsModel) {
+      await enrichReportWithModel();
+      recoveredContent = Boolean(state.report?.model);
+      renderReport();
+      persistState();
+    }
+
+    if (state.report?.model && needsAi) {
+      await generatePersonalizedReport();
+      recoveredContent = true;
+    }
+
+    if (recoveredContent) {
+      await submitResponse();
+    }
+    renderReport();
+    persistState();
+  })().finally(() => {
+    reportRecoveryPromise = null;
   });
 
-  suggestionList.innerHTML = "";
-  state.report.suggestions.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    suggestionList.appendChild(li);
-  });
+  return reportRecoveryPromise;
+}
 
-  retrySubmitButton.hidden = !hasSupabaseConfig() || state.submission.status !== "error";
+async function generatePersonalizedReport() {
+  if (!state.report?.model) return;
+  state.report.ai = { status: "loading", source: "", report: null, error: "" };
+  renderReport();
+  persistState();
+  const responses = questions.map((question, index) => ({
+    id: question.id,
+    text: question.text,
+    optionTitle: getOptionTitle(question, state.answers[index]),
+    dimension: getModelDimensionForQuestion(index),
+  }));
+  try {
+    const response = await fetch("./api/ai-report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: state.report.model, responses }),
+    });
+    if (!response.ok) throw new Error(`报告服务返回 ${response.status}`);
+    const result = await response.json();
+    state.report.ai = {
+      status: "success",
+      source: result.source || "rule_fallback",
+      report: result.report,
+      error: result.warning || "",
+    };
+  } catch (error) {
+    state.report.ai = { status: "error", source: "", report: null, error: error.message };
+  }
+  renderReport();
+  persistState();
+}
+
+function renderModelReport(modelResult) {
+  modelReport.hidden = !modelResult;
+  if (!modelResult) return;
+  const judgment = personalityJudgments[Number(modelResult.profile?.class)] || personalityJudgments[1];
+  personalityJudgmentType.textContent = judgment.profile;
+  personalityJudgmentName.textContent = judgment.name;
+  personalityJudgmentSummary.textContent = judgment.summary;
+  const performance = modelResult.performance || {};
+  modelMetrics.textContent = `模型验证：剖面分类 F1 ${Number(performance.profile_f1_macro || 0).toFixed(3)}，空虚风险 AUC ${Number(performance.risk_auc || 0).toFixed(3)}；结果仅用于研究性参考。`;
+  drawRadar(abilityRadar, modelResult.dimensions);
+}
+
+function drawRadar(canvas, dimensions) {
+  if (!canvas || !dimensions?.length) return;
+  const context = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+  const centerX = width / 2;
+  const centerY = height / 2 + 8;
+  const radius = Math.min(width, height) * 0.34;
+  const count = dimensions.length;
+  const pointAt = (index, scale) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
+    return [centerX + Math.cos(angle) * radius * scale, centerY + Math.sin(angle) * radius * scale];
+  };
+  context.clearRect(0, 0, width, height);
+  context.font = "16px system-ui, sans-serif";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  for (let ring = 1; ring <= 4; ring += 1) {
+    context.beginPath();
+    for (let index = 0; index < count; index += 1) {
+      const [x, y] = pointAt(index, ring / 4);
+      if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+    }
+    context.closePath();
+    context.strokeStyle = "rgba(28, 63, 66, 0.18)";
+    context.stroke();
+  }
+  dimensions.forEach((dimension, index) => {
+    const [axisX, axisY] = pointAt(index, 1);
+    context.beginPath();
+    context.moveTo(centerX, centerY);
+    context.lineTo(axisX, axisY);
+    context.strokeStyle = "rgba(28, 63, 66, 0.15)";
+    context.stroke();
+    const [labelX, labelY] = pointAt(index, 1.18);
+    context.fillStyle = "#173f40";
+    if (dimension.name === "价值坚守") {
+      context.fillText("价值坚守", labelX, labelY - 9);
+      context.fillText(`（反向计分） P${dimension.percentile}`, labelX, labelY + 9);
+    } else {
+      context.fillText(`${displayDimensionName(dimension.name)} P${dimension.percentile}`, labelX, labelY);
+    }
+  });
+  context.beginPath();
+  dimensions.forEach((dimension, index) => {
+    const [x, y] = pointAt(index, Math.max(0.02, dimension.percentile / 100));
+    if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+  });
+  context.closePath();
+  context.fillStyle = "rgba(46, 139, 130, 0.22)";
+  context.strokeStyle = "#2e8b82";
+  context.lineWidth = 3;
+  context.fill();
+  context.stroke();
+}
+
+function getOptionTitle(question, answer) {
+  const options = Array.isArray(question.options) && question.options.length ? question.options : scaleOptions;
+  const option = options.find((item, index) => Number(item.value ?? index + 1) === Number(answer));
+  return option?.title || option?.label || String(answer ?? "");
+}
+
+function getModelDimensionForQuestion(index) {
+  if (index < 2) return "背景信息";
+  if (index < 11) return "认知替代";
+  if (index < 16) return "信息边界渗透";
+  if (index < 22) return "情感依赖";
+  return "价值坚守";
+}
+
+function formatPercent(value) {
+  return `${(Number(value) * 100).toFixed(1)}%`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function displayDimensionName(name) {
+  return name === "价值坚守" ? "价值坚守（反向计分）" : name;
+}
+
+function getThetaExplanation(value) {
+  const theta = Number(value);
+  if (!Number.isFinite(theta)) return "";
+  const distance = Math.abs(theta).toFixed(3);
+  if (theta > 0.0005) return `θ 为 ${theta.toFixed(3)}，表示该维度能力分数高于平均水平 ${distance} 个标准差。`;
+  if (theta < -0.0005) return `θ 为 ${theta.toFixed(3)}，表示该维度能力分数低于平均水平 ${distance} 个标准差。`;
+  return `θ 为 ${theta.toFixed(3)}，表示该维度能力分数接近平均水平。`;
 }
 
 async function submitResponse() {
@@ -355,42 +630,32 @@ async function submitResponse() {
     return;
   }
 
-  if (!hasSupabaseConfig()) {
-    state.submission.status = "skipped";
-    state.submission.message = "报告已生成，可下载保存。";
-    state.submission.lastAttemptAt = new Date().toISOString();
-    return;
-  }
-
   state.submission.status = "submitting";
-  state.submission.message = "正在保存结果，请稍候...";
+  state.submission.message = "正在匿名保存到腾讯云，请稍候...";
   renderReport();
 
   const payload = buildSubmissionPayload();
   try {
-    const response = await fetch(`${stripTrailingSlash(supabaseConfig.projectUrl)}/rest/v1/questionnaire_responses`, {
+    const response = await fetch("./api/responses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        apikey: supabaseConfig.anonKey,
-        Authorization: `Bearer ${supabaseConfig.anonKey}`,
-        Prefer: "return=representation",
       },
       body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(errorText || `Supabase returned ${response.status}`);
+      throw new Error(errorText || `服务器返回 ${response.status}`);
     }
 
     const result = await response.json();
     state.submission.status = "success";
     state.submission.lastAttemptAt = new Date().toISOString();
-    state.submission.responseId = result?.[0]?.id || "";
+    state.submission.responseId = result.id || "";
     state.submission.message = state.submission.responseId
-      ? `结果已保存，记录编号：${state.submission.responseId}`
-      : "结果已保存。";
+      ? `匿名结果已保存到腾讯云，记录编号：${state.submission.responseId}`
+      : "匿名结果已保存到腾讯云。";
   } catch (error) {
     state.submission.status = "error";
     state.submission.lastAttemptAt = new Date().toISOString();
@@ -401,33 +666,16 @@ async function submitResponse() {
 function buildSubmissionPayload() {
   return {
     respondent_code: state.respondent.code,
-    participant_name: state.respondent.name || null,
-    participant_email: state.respondent.email || null,
-    participant_note: state.respondent.note || null,
+    consent: {
+      accepted: Boolean(state.consent),
+      version: "anonymous-storage-v1",
+      accepted_at: state.startedAt,
+    },
     answers: state.answers.map((answer, index) => ({
       id: questions[index].id,
       answer,
     })),
-    scored_answers: state.report.answeredQuestions.map((item) => ({
-      id: item.id,
-      answer: item.answer,
-      scored_answer: item.scoredAnswer,
-    })),
-    raw_scores: state.report.rawScores,
-    normalized_scores: state.report.normalizedScores,
-    detail_scores: state.report.detailScores,
-    total_score: state.report.totalScore,
-    reverse_count: state.report.answeredQuestions.filter((item) => item.reverse).length,
-    duration_seconds: state.report.durationSeconds,
     submitted_at: state.completedAt,
-    client_meta: {
-      userAgent: navigator.userAgent,
-      language: navigator.language,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      started_at: state.startedAt,
-      completed_at: state.completedAt,
-      version: "research-supabase-v1",
-    },
   };
 }
 
@@ -525,6 +773,7 @@ function restoreState() {
     }
     state.startedAt = parsed.startedAt || null;
     state.completedAt = parsed.completedAt || null;
+    state.consent = Boolean(parsed.consent);
     state.respondent = {
       code: parsed.respondent?.code || "",
       name: parsed.respondent?.name || "",
@@ -583,18 +832,6 @@ function formatDuration(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${minutes}分${seconds}秒`;
-}
-
-function downloadJson(payload, filename) {
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {
-    type: "application/json;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
 }
 
 function stripTrailingSlash(value) {

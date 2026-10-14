@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <title>AI 个体报告预览 | Mind Explorer</title>
+    <meta name="description" content="AI情境下存在空虚感个体报告网页预览。" />
+    <link rel="stylesheet" href="./styles.css?v=theta-note-20260823-1" />
+  </head>
+  <body class="report-preview-page">
+    <header class="preview-header">
+      <a href="./index.html">← 返回测评首页</a>
+      <span>Mind Explorer · 报告样式预览</span>
+      <span class="preview-badge">示例数据</span>
+    </header>
+
+    <main class="preview-report" id="preview-report">
+      <section class="preview-cover">
+        <p class="eyebrow">AI-ASSISTED INDIVIDUAL REPORT</p>
+        <h1>AI情境下存在空虚感个体报告</h1>
+        <p class="preview-lead">“保有方向感的主动探索者”</p>
+        <div class="preview-meta">
+          <span>报告编号：PREVIEW-20260821</span>
+          <span>常模样本：748 人</span>
+          <span>模型版本：2026-08-21</span>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>01</span><h2>总体概览</h2></div>
+        <p id="preview-summary">正在加载更新后的模型结果…</p>
+        <div class="preview-kpi-grid">
+          <article><small>空虚风险概率</small><strong id="preview-risk-prob">—</strong><p id="preview-risk-level">正在计算</p></article>
+          <article><small>空虚形态</small><strong id="preview-profile">—</strong></article>
+        </div>
+        <div class="preview-radar-wrap">
+          <div>
+            <h3>四维百分位雷达图</h3>
+            <p>四个维度的能力分数均为数值越低，心理状态越健康。百分位表示与 748 人常模相比的相对位置；百分位越高表示越需要留意。</p>
+          </div>
+          <canvas id="preview-radar" width="640" height="440" aria-label="四维百分位雷达图"></canvas>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>02</span><h2>空虚风险解读</h2></div>
+        <p id="preview-risk-copy"></p>
+        <div class="risk-standard-results" aria-label="两条研究参考线的判定结果">
+          <article><span>初筛标准</span><strong id="preview-screening-result">—</strong></article>
+          <article><span>较高标准</span><strong id="preview-higher-result">—</strong></article>
+        </div>
+        <div class="preview-note">模型采用两条研究参考线：较低参考线用于提示是否值得二次确认，较高参考线用于提示是否值得进一步关注。它们都不构成对个人的固定判断。</div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>03</span><h2>各维度得分与回顾</h2></div>
+        <p class="dimension-direction-note">计分方向说明：四个维度的能力分数均为数值越低，心理状态越健康。</p>
+        <div class="preview-dimensions" id="preview-dimensions"></div>
+        <div class="preview-observations">
+          <h3>具体题目回顾</h3>
+          <p>在“我习惯让AI替我做判断与决策”这一题上，示例作答选择了“中立”。</p>
+          <p>在“在被推送和推荐包围的信息环境里，我有时会分不清哪些是我真正关心的”这一题上，示例作答选择了“比较不符合”。</p>
+          <p class="preview-muted">这里只转述原题与原选项，不由单个选项引申个人性格或状态。</p>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>04</span><h2>空虚形态解读</h2></div>
+        <div class="preview-profile-card">
+          <div class="preview-avatar" aria-hidden="true">◎</div>
+          <div><h3 id="preview-profile-title">正在计算</h3><p id="preview-profile-copy"></p></div>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <div class="preview-section__heading"><span>05</span><h2>情境影响线索</h2></div>
+        <p>本问卷没有直接测量学业表现、睡眠时长或关系质量。部分人可能在压力较大或信息密集时，感到注意分配、作息节奏或现实交流受到影响；请结合自己的实际体验观察，而不要仅凭分数推断。</p>
+      </section>
+
+      <section class="preview-section preview-resource-section">
+        <div class="preview-section__heading"><span>06</span><h2>个人资源与可尝试步骤</h2></div>
+        <div class="preview-two-columns">
+          <article><h3>客观优势与韧性</h3><ul><li>愿意完成测评并查看反馈，本身体现了自我观察意愿。</li><li id="preview-strength">正在根据示例数据整理客观长处。</li></ul></article>
+          <article><h3>可尝试的小步骤</h3><ul><li>在一个具体任务中练习“先自己想，再请 AI 补充”。</li><li>每周保留一段由自己主动选择信息来源的时间。</li><li>需要支持时，可把部分感受带回可信任的现实关系中交流。</li></ul></article>
+        </div>
+      </section>
+
+      <section class="preview-section preview-declaration">
+        <div class="preview-section__heading"><span>07</span><h2>重要声明</h2></div>
+        <p>本报告仅基于本次问卷作答与研究常模，由模型和AI辅助整理生成。它不构成任何形式的个人定性或专业意见，只用于帮助理解此刻的自我感受。每个人的体验都可能随情境和时间变化；如你对自己的状态有疑虑，可以向具备资质的专业人员咨询。</p>
+      </section>
+    </main>
+
+    <script src="./model-runtime.js?v=report-recovery-20260822-1"></script>
+    <script src="./report-preview.js?v=risk-wording-20260831-1"></script>
+  </body>
+</html>

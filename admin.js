@@ -1,78 +1,86 @@
-const supabaseConfig = window.MIND_EXPLORER_SUPABASE_CONFIG || {};
+const recordsBody = document.querySelector("#admin-records");
+const statusText = document.querySelector("#admin-status");
+const searchInput = document.querySelector("#admin-search");
+const detailDialog = document.querySelector("#admin-detail");
+const detailContent = document.querySelector("#admin-detail-content");
+let records = [];
 
-const form = document.querySelector("#admin-export-form");
-const tokenInput = document.querySelector("#admin-token");
-const formatSelect = document.querySelector("#export-format");
-const statusText = document.querySelector("#admin-status-text");
-const functionStatus = document.querySelector("#admin-function-status");
-const previewEndpointButton = document.querySelector("#preview-endpoint-button");
-
-if (supabaseConfig.projectUrl && supabaseConfig.exportFunctionName) {
-  functionStatus.textContent = "已配置";
-} else {
-  functionStatus.textContent = "未配置";
-}
-
-previewEndpointButton.addEventListener("click", () => {
-  if (!hasFunctionConfig()) {
-    statusText.textContent = "当前未配置 projectUrl 或 exportFunctionName，请先填写 supabase-config.js。";
-    return;
-  }
-  statusText.textContent = `导出接口：${getFunctionUrl()}`;
+document.querySelector("#refresh-admin").addEventListener("click", loadRecords);
+document.querySelector("#close-detail").addEventListener("click", () => detailDialog.close());
+searchInput.addEventListener("input", renderRecords);
+recordsBody.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-record-id]");
+  if (button) loadDetail(button.dataset.recordId);
 });
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+loadRecords();
+setInterval(loadRecords, 15000);
 
-  if (!hasFunctionConfig()) {
-    statusText.textContent = "当前还没有配置 Supabase 导出接口。";
-    return;
-  }
-
-  const adminToken = tokenInput.value.trim();
-  if (!adminToken) {
-    statusText.textContent = "请输入管理员导出令牌。";
-    return;
-  }
-
-  const format = formatSelect.value;
-  statusText.textContent = "正在请求导出文件，请稍候...";
-
+async function loadRecords() {
+  statusText.textContent = "正在同步…";
   try {
-    const response = await fetch(getFunctionUrl(), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: supabaseConfig.anonKey || "",
-        "x-admin-token": adminToken,
-      },
-      body: JSON.stringify({ format }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText || `Export failed with status ${response.status}`);
-    }
-
-    const blob = await response.blob();
-    const extension = format === "json" ? "json" : "csv";
-    const fileName = `mind-explorer-export-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.${extension}`;
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = fileName;
-    link.click();
-    URL.revokeObjectURL(url);
-    statusText.textContent = `导出成功，文件名：${fileName}`;
+    const response = await fetch("./api/admin/responses?limit=500", { cache: "no-store" });
+    if (!response.ok) throw new Error(`服务器返回 ${response.status}`);
+    const data = await response.json();
+    records = data.records || [];
+    document.querySelector("#total-count").textContent = data.total ?? 0;
+    document.querySelector("#today-count").textContent = data.today ?? 0;
+    document.querySelector("#last-sync").textContent = new Date().toLocaleTimeString("zh-CN", { hour12: false });
+    statusText.textContent = `已同步 ${records.length} 条最近记录`;
+    renderRecords();
   } catch (error) {
-    statusText.textContent = `导出失败：${error.message}`;
+    statusText.textContent = `读取失败：${error.message}`;
   }
-});
-
-function hasFunctionConfig() {
-  return Boolean(supabaseConfig.projectUrl && supabaseConfig.exportFunctionName);
 }
 
-function getFunctionUrl() {
-  return `${supabaseConfig.projectUrl.replace(/\/+$/, "")}/functions/v1/${supabaseConfig.exportFunctionName}`;
+function renderRecords() {
+  const query = searchInput.value.trim().toLowerCase();
+  const filtered = records.filter((record) =>
+    !query || record.id.toLowerCase().includes(query) || record.respondent_code.toLowerCase().includes(query)
+  );
+  if (!filtered.length) {
+    recordsBody.innerHTML = '<tr><td colspan="4">没有匹配的提交记录。</td></tr>';
+    return;
+  }
+  recordsBody.innerHTML = filtered.map((record) => `
+    <tr>
+      <td>${escapeHtml(formatDate(record.completed_at || record.created_at))}</td>
+      <td><code>${escapeHtml(record.respondent_code)}</code></td>
+      <td>${Number(record.answer_count || 0)} 题</td>
+      <td><button class="admin-detail-button" type="button" data-record-id="${record.id}">查看</button></td>
+    </tr>`).join("");
+}
+
+async function loadDetail(recordId) {
+  detailContent.innerHTML = "<p>正在加载详情…</p>";
+  detailDialog.showModal();
+  try {
+    const response = await fetch(`./api/admin/responses/${encodeURIComponent(recordId)}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`服务器返回 ${response.status}`);
+    renderDetail(await response.json());
+  } catch (error) {
+    detailContent.innerHTML = `<p>读取失败：${escapeHtml(error.message)}</p>`;
+  }
+}
+
+function renderDetail(record) {
+  const answers = record.answers || [];
+  detailContent.innerHTML = `
+    <section class="admin-detail-meta">
+      <p><strong>记录编号：</strong><code>${escapeHtml(record.id)}</code></p>
+      <p><strong>匿名编号：</strong><code>${escapeHtml(record.respondent_code)}</code></p>
+      <p><strong>完成时间：</strong>${escapeHtml(formatDate(record.completed_at || record.created_at))}</p>
+    </section>
+    <h3>26 题原始作答</h3>
+    <div class="admin-answer-grid">${answers.map((item) => `<span><b>${escapeHtml(item.id)}</b>${escapeHtml(item.answer)}</span>`).join("")}</div>`;
+}
+
+function formatDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  return Number.isNaN(date.valueOf()) ? value : date.toLocaleString("zh-CN", { hour12: false });
+}
+function escapeHtml(value) {
+  return String(value ?? "").replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 }

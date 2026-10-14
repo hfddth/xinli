@@ -1,0 +1,25 @@
+# Collected questionnaire data and exports
+exports/
+*.csv
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Runtime secrets and local configuration
+.env
+*.env
+!*.env.example
+
+# Python/runtime artifacts
+__pycache__/
+*.py[cod]
+*.log
+
+# Local archives and editor files
+*.zip
+*.tar
+*.tar.gz
+.DS_Store
+Thumbs.db
+

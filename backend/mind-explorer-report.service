@@ -1,0 +1,19 @@
+[Unit]
+Description=Mind Explorer AI report service
+After=network-online.target
+
+[Service]
+Type=simple
+User=nginx
+Group=nginx
+EnvironmentFile=-/etc/mind-explorer-ai.env
+ExecStart=/usr/bin/python3 /opt/mind-explorer/report_service.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/tmp /var/lib/mind-explorer
+
+[Install]
+WantedBy=multi-user.target

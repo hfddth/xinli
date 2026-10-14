@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <title>AI 个性化解读 | Mind Explorer</title>
+    <meta name="description" content="根据本次问卷作答生成的AI个性化解读。" />
+    <link rel="stylesheet" href="./styles.css?v=ai-report-ready-20260821-1" />
+  </head>
+  <body class="ai-reader-page">
+    <header class="ai-reader-toolbar">
+      <div>
+        <span class="eyebrow">MIND EXPLORER</span>
+        <strong>AI 个性化解读</strong>
+      </div>
+      <div class="ai-reader-actions">
+        <button class="ghost-button" id="close-ai-report" type="button">关闭</button>
+        <button class="primary-button primary-button--compact" id="save-ai-report" type="button">保存报告</button>
+      </div>
+    </header>
+
+    <main class="ai-reader-shell">
+      <section class="personality-card" id="personality-card" data-profile="1">
+        <div class="personality-card__brand">
+          <span class="personality-card__logo" aria-hidden="true">◎</span>
+          <div><strong>Mind Explorer</strong><small>心理探索计划</small></div>
+          <span class="ai-source-badge" id="ai-reader-source">读取中</span>
+        </div>
+        <div class="personality-card__hero">
+          <div>
+            <p class="eyebrow">SUMMARY REPORT</p>
+            <p class="personality-card__prompt">你的 AI 互动画像是</p>
+            <h1 id="personality-name">正在计算…</h1>
+            <h2 id="personality-profile">AI 互动类型</h2>
+          </div>
+          <div class="personality-card__art" aria-hidden="true"><span id="personality-symbol">✦</span></div>
+        </div>
+        <blockquote id="personality-quote">正在读取本次测评结果。</blockquote>
+        <div class="personality-card__traits" id="personality-traits"></div>
+        <div class="personality-card__insights">
+          <article><span class="personality-card__icon">人</span><h3>你的特征</h3><p id="personality-feature"></p></article>
+          <article><span class="personality-card__icon">冠</span><h3>你的优势</h3><p id="personality-strength"></p></article>
+          <article><span class="personality-card__icon">光</span><h3>给你的建议</h3><p id="personality-advice"></p></article>
+        </div>
+        <div class="personality-card__footer"><span></span><strong>探索自我 · 理解未来</strong><span></span><small>与 AI 共处，成长不迷失</small></div>
+        <div class="ai-reader-meta" id="ai-reader-meta"></div>
+      </section>
+
+      <p class="dimension-direction-note">计分方向说明：四个维度的能力分数均为数值越低，心理状态越健康。</p>
+      <div class="ai-reader-content" id="ai-reader-content"></div>
+
+      <section class="ai-reader-empty" id="ai-reader-empty" hidden>
+        <h2>暂时没有可展示的个性化解读</h2>
+        <p id="ai-reader-empty-copy">请先完成测评，报告生成后再从结果页进入。</p>
+        <button class="primary-button primary-button--compact" id="return-to-test" type="button">返回测评</button>
+      </section>
+
+      <section class="ai-reader-declaration">
+        <p>本页仅根据本次问卷作答与研究常模生成，不用于给个人作固定判断，也不能替代专业支持。</p>
+      </section>
+    </main>
+
+    <script src="./ai-report.js?v=portrait-wording-20260823-1"></script>
+  </body>
+</html>
